@@ -1,12 +1,20 @@
 const mysql = require('mysql');
+let pool = null;
 
-const config = {
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'retro-collection'
-};
+exports.connect = function(done) {
+  pool = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    password: 'root',
+    database: 'retro-collection'
+  });
+  if (!pool) {
+    done(new Error('Cannot connect to database'));
+  } else {
+    done();
+  }
+}
 
-const pool = mysql.createPool(config);
-
-module.exports = pool;
+exports.getPool = function() {
+  return pool;
+}

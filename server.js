@@ -1,9 +1,9 @@
 const express = require('express');
-const login = require('./api/routes/login');
-const register = require('./api/routes/register');
 const port = 3002;
 const bodyParser = require('body-parser');
 const app = express();
+const db = require('./api/data/config');
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -16,8 +16,20 @@ app.use(function(req, res, next) {
   next();
 })
 
-login(app);
-register(app);
+
+app.use(require('./api'));
+
+app.use(function(req, res, next) {
+  res.status(404).send('Not found');
+})
+
+db.connect(function(err) {
+  if (err) {
+    console.log('Unable to connect to database');
+    process.exit(1);
+  }
+  console.log('you are new connected');
+})
 
 const server = app.listen(port, (error) => {
   if (error) {
