@@ -6,7 +6,7 @@ exports.connect = function(done) {
     host: 'localhost',
     user: 'root',
     password: 'root',
-    database: 'retro-collection'
+    database: 'RetroCollection'
   });
   if (!pool) {
     done(new Error('Cannot connect to database'));
