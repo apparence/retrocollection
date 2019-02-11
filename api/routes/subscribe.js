@@ -1,13 +1,11 @@
 
 const db = require('../data/config');
-const bodyParser = require('body-parser');
 const router = require('express').Router();
 const randomString = require('randomstring');
 const bcrypt = require('bcrypt');
 
 router.post('/', function(req, res, next) {
   let pool = db.getPool();
-  let values = null;
 
   if (!pool) {
     res.status(500).send('Something wrong');
