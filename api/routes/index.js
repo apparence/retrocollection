@@ -4,7 +4,7 @@
 
 const router = require('express').Router();
 
-router.use('/subscribe', require('./subscribe'));
+router.use('/signin', require('./signin'));
 router.use('/login', require('./login'));
 router.use('/user', require('./user'));
 
