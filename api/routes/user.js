@@ -47,10 +47,17 @@ router.get('/:id', function(req, res, next) {
       if (error) {
         res.status(400).send(error);
       }
+      if (result.length == 0) {
+        res.status(400).json({
+          'success': false,
+          'details': 'User not found'
+        })
+      } else {
       res.status(200).json({
         'success': 'true',
         'user': result
       });
+    }
     })
   }
 })
@@ -68,7 +75,7 @@ router.put('/:id', function(req, res, next) {
   }
 })
 
-router.delete('/:id', function(req, res, next) {
+router.delete('/', function(req, res, next) {
   let pool = db.getPool();
   let userId = tools.getUserId(req.headers['authorization']);
   if (userId == -1) {
