@@ -10,8 +10,8 @@ router.get('/', function(req, res, next){
 
   if (userId == -1) {
     res.status(400).json({
-      'success': 'false',
-      'error': 'bad token'
+      'success': false,
+      'details': 'bad token'
     });
     return;
   }
@@ -21,7 +21,7 @@ router.get('/', function(req, res, next){
       res.status(400).send(error);
     }
     res.status(200).json({
-      'success': 'true',
+      'success': true,
       'users': result
     });
   })
@@ -62,6 +62,7 @@ router.get('/:id', function(req, res, next) {
   }
 })
 
+//// TODO: finir le put ici
 router.put('/:id', function(req, res, next) {
   let pool = db.getPool();
   let userId = tools.getUserId(req.headers['authorization']);
