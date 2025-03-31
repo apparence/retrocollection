@@ -16,13 +16,14 @@ router.post('/', function(req, res, next) {
       'details': "email, password and username mandatory"
     });
   } else {
-    pool.query('SELECT * FROM Users WHERE Email = ?', req.body.email, (error, result) => {
+    pool.query('SELECT * FROM users WHERE email = ?', req.body.email, (error, result) => {
       if (error) {
         res.status(400).send(error);
       }
+      console.log(result)
       if (result.length == 0) {
         bcrypt.hash(req.body.password, 10, function(err, hash) {
-          pool.query('INSERT INTO Users (UserName, Email, Password) VALUES (?, ?, ?)', [req.body.username, req.body.email, hash], (error, result) => {
+          pool.query('INSERT INTO users (user_name, email, password) VALUES (?, ?, ?)', [req.body.username, req.body.email, hash], (error, result) => {
             if (error) {
               res.status(400).send(error);
             }

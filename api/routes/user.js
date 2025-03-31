@@ -4,7 +4,7 @@ const router = require('express').Router();
 var toolsModule = require('../data/tools');
 let tools = new toolsModule();
 
-router.get('/', function(req, res, next){
+router.get('/', function(req, res, next) {
   let pool = db.getPool();
   let userId = tools.getUserId(req.headers['authorization']);
 
@@ -16,7 +16,7 @@ router.get('/', function(req, res, next){
     return;
   }
 
-  pool.query("SELECT UserName, FirstName, LastName, Email, PictureURL FROM Users", (error, result) => {
+  pool.query("SELECT id, user_name, first_name, last_name, email, picture_url FROM users", (error, result) => {
     if (error) {
       res.status(400).send(error);
     }
@@ -43,7 +43,7 @@ router.get('/:id', function(req, res, next) {
     res.status(500).send("Something Wrong");
   } else {
     let id = req.params.id;
-    pool.query("SELECT * FROM Users WHERE UserID = ?", id, (error, result) => {
+    pool.query("SELECT id, user_name, first_name, last_name, email, picture_url FROM users WHERE id = ?", id, (error, result) => {
       if (error) {
         res.status(400).send(error);
       }
@@ -86,7 +86,7 @@ router.delete('/', function(req, res, next) {
     });
     return
   }
-  pool.query("DELETE FROM Users WHERE UserID = ?", userId, (error, result) => {
+  pool.query("DELETE FROM users WHERE id = ?", userId, (error, result) => {
     if (error) {
       res.status(400).send(error)
     }
@@ -96,4 +96,5 @@ router.delete('/', function(req, res, next) {
     });
   });
 })
+
 module.exports = router

@@ -13,14 +13,14 @@ router.post('/', function(req, res, next) {
   } else if (!req.body.email || !req.body.password) {
     res.status(400).send("Body emprty");
   } else {
-    pool.query('SELECT * FROM Users WHERE Email = ?', req.body.email, (error, result) => {
+    pool.query('SELECT * FROM users WHERE email = ?', req.body.email, (error, result) => {
       if (error) {
         res.status(400).send(error);
       }
       if (result.length == 0) {
         res.status(400).send("User not found");
-      } else if (result[0].Email.toString().trim() == req.body.email) {
-        bcrypt.compare(req.body.password, result[0].Password, function(err, isOK) {
+      } else if (result[0].email.toString().trim() == req.body.email) {
+        bcrypt.compare(req.body.password, result[0].password, function(err, isOK) {
           if (isOK) {
               res.status(200).json({
                 'success': true,

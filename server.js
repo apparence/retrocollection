@@ -23,6 +23,7 @@ app.use(function(req, res, next) {
   res.status(404).send('Not found');
 })
 
+
 db.connect(function(err) {
   if (err) {
     console.log('Unable to connect to database');
@@ -30,6 +31,7 @@ db.connect(function(err) {
   }
   console.log('you are new connected');
 })
+
 
 const server = app.listen(port, (error) => {
   if (error) {
